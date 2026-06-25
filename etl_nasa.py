@@ -3,7 +3,7 @@ import mysql.connector
 import pandas as pd
 import requests
 
-# --- CONFIGURATION ---
+#0. API et Base de données MySQL
 NASA_API_KEY = "F2cPNmGsepIDaPpECnUg4VWXHPDqtGLFJmATq9kd"
 DB_CONFIG = {
     "host": "localhost",
@@ -13,7 +13,7 @@ DB_CONFIG = {
 }
 
 
-# --- 1. EXTRACTION ---
+#1. EXTRACTION
 def extraire_donnees():
     aujourdhui = datetime.now().date()
     dans_sept_jours = aujourdhui + timedelta(days=7)
@@ -28,7 +28,7 @@ def extraire_donnees():
         return None
 
 
-# --- 2. TRANSFORMATION ---
+#2. TRANSFORMATION
 def transformer_donnees(donnees_brutes):
     liste_asteroides = []
 
@@ -77,7 +77,7 @@ def transformer_donnees(donnees_brutes):
     return df
 
 
-# --- 3. CHARGEMENT (LOAD) ---
+#3. CHARGEMENT (LOAD)
 def charger_dans_mysql(df):
     try:
         conn = mysql.connector.connect(**DB_CONFIG)
@@ -111,7 +111,7 @@ def charger_dans_mysql(df):
             conn.close()
 
 
-# --- ENCHAÎNEMENT DE LA PIPELINE ---
+#ENCHAÎNEMENT DE LA PIPELINE
 if __name__ == "__main__":
     print("=== DÉMARRAGE DU PIPELINE ETL ===")
 
